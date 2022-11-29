@@ -2,9 +2,9 @@ import Link from "next/link"
 
 function App({ recent }) {
   return (
-    <section className="ml-52">
+    <section className="ml-56">
       <h1 className="text-white sticky top-0 left-0 p-5 text-2xl font-semibold bg-[#1e1b21] z-10">
-        Recent Releases
+        New Episodes
       </h1>
       <div className="p-5 grid grid-cols-app justify-center gap-3">
         {recent.map(({ id, title, image, episodeNumber }) => (

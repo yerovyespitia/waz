@@ -20,13 +20,13 @@ const Populars = () => {
   const { populars } = useFetchData()
 
   return (
-    <section className="ml-52">
+    <section className="ml-56">
       <h1 className="text-white sticky top-0 left-0 p-5 text-2xl font-semibold bg-[#1e1b21] z-10">
-        Populars
+        Popular Animes
       </h1>
       <div className="p-5 grid grid-cols-app justify-center gap-3">
         {populars.map(({ id, title, image, url }) => (
-          <Link href={``} key={id}>
+          <Link href={`/`} key={id}>
             <div className="text-center my-2 cursor-pointer hover:scale-105 transition-all group">
               <img
                 src={image}
