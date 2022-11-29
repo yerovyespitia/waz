@@ -56,14 +56,14 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 1080,
         "resizable": true,
         "title": "waz",
-        "width": 1680,
         "hiddenTitle": true,
         "center": true,
-        "minHeight": 1080,
+        "width": 1680,
+        "height": 1080,
         "minWidth": 1680,
+        "minHeight": 1080,
         "focus": true
       }
     ]

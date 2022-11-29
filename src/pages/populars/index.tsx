@@ -1,14 +1,32 @@
+import axios from "axios"
 import Link from "next/link"
+import { useEffect, useState } from "react"
 
-function App({ recent }) {
+const useFetchData = () => {
+  const [populars, setPopulars] = useState([])
+
+  useEffect(() => {
+    axios
+      .get("https://api.consumet.org/anime/gogoanime/top-airing")
+      .then((res) => {
+        setPopulars(res.data.results)
+      })
+  }, [])
+
+  return { populars }
+}
+
+const Populars = () => {
+  const { populars } = useFetchData()
+
   return (
     <section className="ml-52">
       <h1 className="text-white sticky top-0 left-0 p-5 text-2xl font-semibold bg-[#1e1b21] z-10">
-        Recent Releases
+        Populars
       </h1>
       <div className="p-5 grid grid-cols-app justify-center gap-3">
-        {recent.map(({ id, title, image, episodeNumber }) => (
-          <Link href={`/watch/${id}-episode-${episodeNumber}`} key={id}>
+        {populars.map(({ id, title, image, url }) => (
+          <Link href={``} key={id}>
             <div className="text-center my-2 cursor-pointer hover:scale-105 transition-all group">
               <img
                 src={image}
@@ -16,9 +34,6 @@ function App({ recent }) {
                 alt={title}
               />
               <p className="text-white text-lg font-bold mt-2">{title}</p>
-              <p className="text-md text-gray-400 mt-1">
-                Episode {episodeNumber}
-              </p>
             </div>
           </Link>
         ))}
@@ -27,17 +42,4 @@ function App({ recent }) {
   )
 }
 
-export default App
-
-export const getStaticProps = async () => {
-  const res = await fetch(
-    "https://api.consumet.org/anime/gogoanime/recent-episodes"
-  )
-  const recent = await res.json()
-
-  return {
-    props: {
-      recent: recent.results,
-    },
-  }
-}
+export default Populars
