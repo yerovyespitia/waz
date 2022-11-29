@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  background-color: #28252d;
+}
+
+@layer components {
+  .links {
+    @apply flex flex-row items-center gap-2 hover:text-white cursor-pointer;
+  }
+}
+
+@layer utilities {
+  .white-icon {
+    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg)
+      brightness(103%) contrast(103%);
+  }
+}
