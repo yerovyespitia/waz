@@ -6,19 +6,25 @@ import favorites from "../assets/favorites.svg"
 import downloaded from "../assets/downloaded.svg"
 import settings from "../assets/settings.svg"
 import { useRouter } from "next/router"
+import { useDispatch } from "react-redux"
+import { search } from "../states/inputSlice"
 
 const Navigation = () => {
+  const dispatch = useDispatch()
   const router = useRouter()
   const { pathname } = router
 
   return (
     <nav className="flex flex-col justify-start items-center fixed top-0 left-0 w-56 h-full transition-all bg-[#1c1721]">
       <ul className="flex flex-col gap-5 text-[#9D9D9D] mt-8">
-        <input
-          className="rounded-md bg-[#262229] py-2 px-3 outline-none text-left"
-          type="text"
-          placeholder="Search"
-        />
+        <Link href={"/search"}>
+          <input
+            className="rounded-md bg-[#262229] py-2 px-3 outline-none text-left"
+            type="text"
+            placeholder="Search"
+            onChange={(e) => dispatch(search({ results: e.target.value }))}
+          />
+        </Link>
         <Link href={"/"}>
           <div
             className={

@@ -62,8 +62,10 @@
         "center": true,
         "width": 1680,
         "height": 1080,
-        "minWidth": 1680,
-        "minHeight": 1080,
+        "maxWidth": 1680,
+        "maxHeight": 1080,
+        "minHeight": 650,
+        "minWidth": 750,
         "focus": true
       }
     ]
