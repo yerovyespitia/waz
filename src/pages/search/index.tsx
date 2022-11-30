@@ -28,8 +28,8 @@ const Search = () => {
         Search
       </h1>
       <div className="p-5 grid grid-cols-app justify-center gap-3">
-        {anime.map(({ id, title, image, url }) => (
-          <Link href={`/`} key={id}>
+        {anime.map(({ id, title, image }) => (
+          <Link href={`/anime/${id}`} key={id}>
             <div className="text-center my-2 cursor-pointer hover:scale-105 transition-all group">
               <img
                 src={image}

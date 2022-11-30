@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
+import ReactLoading from "react-loading"
 
 const useFetchData = () => {
   const router = useRouter()
@@ -24,12 +25,25 @@ const Episode = () => {
   const { episode, notExist } = useFetchData()
 
   if (notExist)
-    return <p className="ml-56 text-white font-bold text-2xl">Loading...</p>
+    return (
+      <div className="flex justify-center mt-56 ml-56 h-screen">
+        <ReactLoading
+          type={"spinningBubbles"}
+          color={"white"}
+          height={50}
+          width={50}
+        />
+      </div>
+    )
 
   return (
     <div className="ml-56">
       {!episode ? (
-        <p className="text-white font-bold text-2xl">Not working</p>
+        <div className="flex justify-center mt-56">
+          <p className="text-white font-medium text-2xl">
+            There was an error. Please try later.
+          </p>
+        </div>
       ) : (
         <video
           className="w-full"
