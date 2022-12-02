@@ -4,15 +4,32 @@ import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import ReactLoading from "react-loading"
 
+interface EpisodesTypes {
+  id: string
+  number: number
+}
+
+interface InfoTypes {
+  id: string
+  title: string
+  image: string
+  description: string
+  releaseDate: string
+  status: string
+  subOrDub: string
+  totalEpisodes: number
+  episodes: EpisodesTypes[]
+}
+
 const useFetchData = () => {
   const router = useRouter()
   const { id } = router.query
-  const [info, setInfo] = useState([])
+  const [info, setInfo] = useState<InfoTypes[]>([])
   const [notExist, setNotExist] = useState(true)
 
   useEffect(() => {
     axios
-      .get(`https://api.consumet.org/anime/gogoanime/info/${id}`)
+      .get<InfoTypes>(`https://api.consumet.org/anime/gogoanime/info/${id}`)
       .then((res) => {
         setInfo([res.data])
       })
@@ -59,7 +76,7 @@ const Anime = () => {
                 alt={title}
               />
               <div className="flex justify-center flex-col items-center lg:ml-4 lg:items-start">
-                <h1 className="text-white text-center text-4xl font-bold mt-4">
+                <h1 className="text-white text-center text-4xl font-bold">
                   {title}
                 </h1>
                 <div className="mt-4 flex gap-0 items-center sm:gap-4 flex-col sm:flex-row">

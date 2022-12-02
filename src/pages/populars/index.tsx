@@ -1,24 +1,6 @@
-import axios from "axios"
 import Link from "next/link"
-import { useEffect, useState } from "react"
 
-const useFetchData = () => {
-  const [populars, setPopulars] = useState([])
-
-  useEffect(() => {
-    axios
-      .get("https://api.consumet.org/anime/gogoanime/top-airing")
-      .then((res) => {
-        setPopulars(res.data.results)
-      })
-  }, [])
-
-  return { populars }
-}
-
-const Populars = () => {
-  const { populars } = useFetchData()
-
+const Populars = ({ populars }) => {
   return (
     <section className="ml-56">
       <h1 className="text-white sticky top-0 left-0 p-5 text-2xl font-semibold bg-[#1e1b21] z-10">
@@ -43,3 +25,14 @@ const Populars = () => {
 }
 
 export default Populars
+
+export const getStaticProps = async () => {
+  const res = await fetch("https://api.consumet.org/anime/gogoanime/top-airing")
+  const populars = await res.json()
+
+  return {
+    props: {
+      populars: populars.results,
+    },
+  }
+}

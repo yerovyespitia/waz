@@ -2,6 +2,8 @@ import axios from "axios"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import ReactLoading from "react-loading"
+import { invoke } from "@tauri-apps/api/tauri"
+import { save } from "@tauri-apps/api/dialog"
 
 const useFetchData = () => {
   const router = useRouter()
@@ -9,11 +11,20 @@ const useFetchData = () => {
   const [episode, setEpisode] = useState("")
   const [notExist, setNotExist] = useState(true)
 
+  const findBetterQuality = (data) => {
+    return (
+      data.filter((video) => video.quality === "1080p")[0].url ||
+      data.filter((video) => video.quality === "720p")[0].url ||
+      data.filter((video) => video.quality === "default")[0].url ||
+      data.filter((video) => video.quality === "backup")[0].url
+    )
+  }
+
   useEffect(() => {
     axios
       .get(`https://api.consumet.org/anime/gogoanime/watch/${id}`)
       .then((res) => {
-        setEpisode(res.data.sources.filter((x) => x.quality === "720p")[0].url)
+        setEpisode(findBetterQuality(res.data.sources))
       })
       .finally(() => setNotExist(false))
   }, [])
@@ -23,6 +34,19 @@ const useFetchData = () => {
 
 const Episode = () => {
   const { episode, notExist } = useFetchData()
+
+  const handleDownload = async (url) => {
+    try {
+      const savePath = await save()
+      if (!savePath) return
+      await invoke("download_ep", {
+        path: savePath,
+        url: url,
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   if (notExist)
     return (
@@ -52,6 +76,7 @@ const Episode = () => {
           src={episode}
         />
       )}
+      <button onClick={() => handleDownload(episode)}>Download</button>
     </div>
   )
 }
