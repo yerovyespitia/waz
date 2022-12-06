@@ -6,6 +6,7 @@ import { invoke } from "@tauri-apps/api/tauri"
 import { save } from "@tauri-apps/api/dialog"
 import Image from "next/image"
 import ditto from "../../assets/ditto.gif"
+import back from "../../assets/back.svg"
 
 const useFetchData = () => {
   const router = useRouter()
@@ -36,6 +37,7 @@ const useFetchData = () => {
 
 const Episode = () => {
   const { episode, notExist } = useFetchData()
+  const router = useRouter()
 
   const handleDownload = async (url) => {
     try {
@@ -73,6 +75,13 @@ const Episode = () => {
         </div>
       ) : (
         <>
+          <Image
+            src={back}
+            width={30}
+            height={30}
+            className="cursor-pointer hover:scale-105"
+            onClick={() => router.back()}
+          />
           <video
             className="w-full"
             autoPlay={true}
