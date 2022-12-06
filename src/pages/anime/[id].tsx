@@ -3,6 +3,7 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import ReactLoading from "react-loading"
+import Heart from "react-heart"
 
 interface EpisodesTypes {
   id: string
@@ -34,13 +35,14 @@ const useFetchData = () => {
         setInfo([res.data])
       })
       .finally(() => setNotExist(false))
-  }, [])
+  }, [id])
 
   return { info, notExist }
 }
 
 const Anime = () => {
   const { info, notExist } = useFetchData()
+  const [isClick, setClick] = useState(false)
 
   if (notExist)
     return (
@@ -76,9 +78,18 @@ const Anime = () => {
                 alt={title}
               />
               <div className="flex justify-center flex-col items-center lg:ml-4 lg:items-start">
-                <h1 className="text-white text-center text-4xl font-bold">
-                  {title}
-                </h1>
+                <div className="flex">
+                  <h1 className="text-white text-center mr-3 text-4xl font-bold">
+                    {title}
+                  </h1>
+                  <Heart
+                    isActive={isClick}
+                    inactiveColor={"white"}
+                    activeColor={"#B52B4E"}
+                    className="w-7"
+                    onClick={() => setClick(!isClick)}
+                  />
+                </div>
                 <div className="mt-4 flex gap-0 items-center sm:gap-4 flex-col sm:flex-row">
                   <p className="text-gray-400 text-lg font-medium">
                     {releaseDate}

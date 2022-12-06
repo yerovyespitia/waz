@@ -4,6 +4,8 @@ import { useEffect, useState } from "react"
 import ReactLoading from "react-loading"
 import { invoke } from "@tauri-apps/api/tauri"
 import { save } from "@tauri-apps/api/dialog"
+import Image from "next/image"
+import ditto from "../../assets/ditto.gif"
 
 const useFetchData = () => {
   const router = useRouter()
@@ -27,7 +29,7 @@ const useFetchData = () => {
         setEpisode(findBetterQuality(res.data.sources))
       })
       .finally(() => setNotExist(false))
-  }, [])
+  }, [id])
 
   return { episode, notExist }
 }
@@ -63,20 +65,23 @@ const Episode = () => {
   return (
     <div className="ml-56">
       {!episode ? (
-        <div className="flex justify-center mt-56">
-          <p className="text-white font-medium text-2xl">
+        <div className="flex flex-col items-center justify-center mt-36">
+          <Image src={ditto} width={250} height={150} objectFit="cover" />
+          <p className="text-white font-bold text-3xl mt-5">
             There was an error. Please try later.
           </p>
         </div>
       ) : (
-        <video
-          className="w-full"
-          autoPlay={true}
-          controls={true}
-          src={episode}
-        />
+        <>
+          <video
+            className="w-full"
+            autoPlay={true}
+            controls={true}
+            src={episode}
+          />
+          <button onClick={() => handleDownload(episode)}>Download</button>
+        </>
       )}
-      <button onClick={() => handleDownload(episode)}>Download</button>
     </div>
   )
 }

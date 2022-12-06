@@ -33,7 +33,7 @@ const Navigation = () => {
                 : "links hover:bg-[#262229]"
             }
           >
-            <Image src={home} width={16} height={16}></Image>
+            <Image src={home} width={16} height={16} />
             <li>Home</li>
           </div>
         </Link>
@@ -45,7 +45,7 @@ const Navigation = () => {
                 : "links hover:bg-[#262229]"
             }
           >
-            <Image src={populars} width={16} height={16}></Image>
+            <Image src={populars} width={16} height={16} />
             <li>Populars</li>
           </div>
         </Link>
@@ -57,7 +57,7 @@ const Navigation = () => {
                 : "links hover:bg-[#262229]"
             }
           >
-            <Image src={favorites} width={16} height={16}></Image>
+            <Image src={favorites} width={16} height={16} />
             <li>Favorites</li>
           </div>
         </Link>
@@ -69,11 +69,11 @@ const Navigation = () => {
                 : "links hover:bg-[#262229]"
             }
           >
-            <Image src={downloaded} width={16} height={16}></Image>
+            <Image src={downloaded} width={16} height={16} />
             <li>Downloads</li>
           </div>
         </Link>
-        <Link href={"/settings"}>
+        {/* <Link href={"/settings"}>
           <div
             className={
               pathname === "/settings"
@@ -81,10 +81,10 @@ const Navigation = () => {
                 : "links hover:bg-[#262229]"
             }
           >
-            <Image src={settings} width={16} height={16}></Image>
+            <Image src={settings} width={16} height={16} />
             <li>Settings</li>
           </div>
-        </Link>
+        </Link> */}
       </ul>
     </nav>
   )
