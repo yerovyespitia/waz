@@ -41,8 +41,30 @@ const useFetchData = () => {
 }
 
 const Anime = () => {
+  const router = useRouter()
+  const { id } = router.query
   const { info, notExist } = useFetchData()
-  const [isClick, setClick] = useState(false)
+  const [favorites, setFavorites] = useState(
+    JSON.parse(localStorage.getItem("favorites")) || []
+  )
+
+  useEffect(() => {
+    localStorage.setItem("favorites", JSON.stringify(favorites))
+  }, [favorites])
+
+  const setFavoritesFromLocalStorage = (param) => {
+    localStorage.setItem("favorites", JSON.stringify(param))
+  }
+
+  const handleOnClick = () => {
+    if (!favorites.includes(id)) {
+      setFavorites((anime) => anime.concat(id))
+    } else {
+      let tempFavorites = favorites
+      setFavorites(tempFavorites.filter((fav) => fav !== id))
+      setFavoritesFromLocalStorage(tempFavorites.filter((fav) => fav !== id))
+    }
+  }
 
   if (notExist)
     return (
@@ -83,11 +105,11 @@ const Anime = () => {
                     {title}
                   </h1>
                   <Heart
-                    isActive={isClick}
+                    isActive={favorites.includes(id)}
                     inactiveColor={"white"}
                     activeColor={"#B52B4E"}
                     className="w-7"
-                    onClick={() => setClick(!isClick)}
+                    onClick={handleOnClick}
                   />
                 </div>
                 <div className="mt-4 flex gap-0 items-center sm:gap-4 flex-col sm:flex-row">
@@ -111,7 +133,7 @@ const Anime = () => {
             </div>
             <div className="mt-8 grid grid-cols-ep justify-center items-center lg:justify-start gap-4">
               {episodes.map(({ id, number }) => (
-                <Link href={`/watch/${id}`}>
+                <Link href={`/watch/${id}`} key={id}>
                   <button className="bg-[#B52B4E] h-10 rounded text-white font-bold">
                     Ep {number}
                   </button>
