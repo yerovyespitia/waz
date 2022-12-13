@@ -61,7 +61,7 @@ const Navigation = () => {
             <li>Favorites</li>
           </div>
         </Link>
-        <Link href={"/downloaded"}>
+        {/* <Link href={"/downloaded"}>
           <div
             className={
               pathname === "/downloaded"
@@ -72,7 +72,7 @@ const Navigation = () => {
             <Image src={downloaded} width={16} height={16} />
             <li>Downloads</li>
           </div>
-        </Link>
+        </Link> */}
         {/* <Link href={"/settings"}>
           <div
             className={

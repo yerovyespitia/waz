@@ -2,8 +2,6 @@ import axios from "axios"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import ReactLoading from "react-loading"
-import { invoke } from "@tauri-apps/api/tauri"
-import { save } from "@tauri-apps/api/dialog"
 import Image from "next/image"
 import ditto from "../../assets/ditto.gif"
 import back from "../../assets/back.svg"
@@ -38,19 +36,6 @@ const useFetchData = () => {
 const Episode = () => {
   const { episode, notExist } = useFetchData()
   const router = useRouter()
-
-  const handleDownload = async (url) => {
-    try {
-      const savePath = await save()
-      if (!savePath) return
-      await invoke("download_ep", {
-        path: savePath,
-        url: url,
-      })
-    } catch (error) {
-      console.log(error)
-    }
-  }
 
   if (notExist)
     return (
@@ -88,7 +73,6 @@ const Episode = () => {
             controls={true}
             src={episode}
           />
-          <button onClick={() => handleDownload(episode)}>Download</button>
         </>
       )}
     </div>
