@@ -27,6 +27,7 @@ const Populars = ({ populars }) => {
 export default Populars
 
 export const getStaticProps = async () => {
+  // Get top airing animes available
   const res = await fetch("https://api.consumet.org/anime/gogoanime/top-airing")
   const populars = await res.json()
 

@@ -30,6 +30,7 @@ function App({ recent }) {
 export default App
 
 export const getStaticProps = async () => {
+  // Get recent episodes available
   const res = await fetch(
     "https://api.consumet.org/anime/gogoanime/recent-episodes"
   )

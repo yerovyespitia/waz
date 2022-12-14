@@ -16,6 +16,7 @@
     "react-dom": "^18.2.0",
     "react-heart": "^1.0.6",
     "react-loading": "^2.0.3",
+    "react-netflix-player": "^1.2.0",
     "react-redux": "^8.0.5",
     "redux": "^4.2.0"
   },

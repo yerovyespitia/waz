@@ -9,6 +9,7 @@ const useFetchData = () => {
   const [anime, setAnime] = useState([])
 
   useEffect(() => {
+    // Fetch and filter the animes (results) with text submited
     axios
       .get(`https://api.consumet.org/anime/gogoanime/${results}`)
       .then((res) => {

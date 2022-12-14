@@ -29,6 +29,8 @@ const useFetchData = () => {
   const [notExist, setNotExist] = useState(true)
 
   useEffect(() => {
+    // Get animes info
+    // If animes does exist sets notExist as false
     axios
       .get<InfoTypes>(`https://api.consumet.org/anime/gogoanime/info/${id}`)
       .then((res) => {
@@ -44,19 +46,24 @@ const Anime = () => {
   const router = useRouter()
   const { id } = router.query
   const { info, notExist } = useFetchData()
+  // Favorite animes array added to localStorage
   const [favorites, setFavorites] = useState(
     JSON.parse(localStorage.getItem("favorites")) || []
   )
 
   useEffect(() => {
+    // Keep favorites array from localStorage updated
     localStorage.setItem("favorites", JSON.stringify(favorites))
   }, [favorites])
 
   const setFavoritesFromLocalStorage = (param) => {
+    // Change elements from favorites array from localStorage
     localStorage.setItem("favorites", JSON.stringify(param))
   }
 
   const handleOnClick = () => {
+    // Add an anime to favorites when click (without duplicates)
+    // Remove an anime from favorites when click again
     if (!favorites.includes(id)) {
       setFavorites((anime) => anime.concat(id))
     } else {
@@ -66,6 +73,7 @@ const Anime = () => {
     }
   }
 
+  // Loading screen
   if (notExist)
     return (
       <div className="flex justify-center mt-56 ml-56 h-screen">

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import ReactLoading from "react-loading"
 import Image from "next/image"
 import ditto from "../../assets/ditto.gif"
-import back from "../../assets/back.svg"
+import { ReactNetflixPlayer } from "react-netflix-player"
 
 const useFetchData = () => {
   const router = useRouter()
@@ -13,6 +13,7 @@ const useFetchData = () => {
   const [notExist, setNotExist] = useState(true)
 
   const findBetterQuality = (data) => {
+    // Find the best video quality available
     return (
       data.filter((video) => video.quality === "1080p")[0].url ||
       data.filter((video) => video.quality === "720p")[0].url ||
@@ -22,6 +23,8 @@ const useFetchData = () => {
   }
 
   useEffect(() => {
+    // Get episode of an anime
+    // If this episode does exist sets notExist as false
     axios
       .get(`https://api.consumet.org/anime/gogoanime/watch/${id}`)
       .then((res) => {
@@ -30,13 +33,18 @@ const useFetchData = () => {
       .finally(() => setNotExist(false))
   }, [id])
 
-  return { episode, notExist }
+  return { episode, notExist, id, router }
 }
 
 const Episode = () => {
-  const { episode, notExist } = useFetchData()
-  const router = useRouter()
+  const { episode, notExist, id, router } = useFetchData()
+  const title = Array.from(id).join("").split("-").join(" ").toUpperCase()
+  enum LanguagesPlayer {
+    pt = "pt",
+    en = "en",
+  }
 
+  // Loading screen
   if (notExist)
     return (
       <div className="flex justify-center mt-56 ml-56 h-screen">
@@ -59,21 +67,15 @@ const Episode = () => {
           </p>
         </div>
       ) : (
-        <>
-          <Image
-            src={back}
-            width={30}
-            height={30}
-            className="cursor-pointer hover:scale-105"
-            onClick={() => router.back()}
-          />
-          <video
-            className="w-full"
-            autoPlay={true}
-            controls={true}
-            src={episode}
-          />
-        </>
+        <ReactNetflixPlayer
+          titleMedia={`${title}`}
+          title={`${title}`}
+          autoPlay={true}
+          backButton={() => router.back()}
+          playerLanguage={LanguagesPlayer.en}
+          autoControllCloseEnabled={true}
+          src={episode}
+        />
       )}
     </div>
   )

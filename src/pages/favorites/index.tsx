@@ -4,11 +4,13 @@ import { useEffect, useState } from "react"
 
 const Favorites = () => {
   const [anime, setAnime] = useState([])
+  // Favorite animes array added to localStorage
   const [favorites, setFavorites] = useState(
     JSON.parse(localStorage.getItem("favorites")) || []
   )
 
   useEffect(() => {
+    // Loop through favorite animes and get their info
     favorites.map((fav) =>
       axios
         .get(`https://api.consumet.org/anime/gogoanime/${fav}`)
