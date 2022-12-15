@@ -1,9 +1,11 @@
 import axios from "axios"
+import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import ReactLoading from "react-loading"
-import Heart from "react-heart"
+import Heart from "../../assets/heart.svg"
+import HeartFill from "../../assets/heart-fill.svg"
 
 interface EpisodesTypes {
   id: string
@@ -112,13 +114,25 @@ const Anime = () => {
                   <h1 className="text-white text-center mr-3 text-4xl font-bold">
                     {title}
                   </h1>
-                  <Heart
-                    isActive={favorites.includes(id)}
-                    inactiveColor={"white"}
-                    activeColor={"#B52B4E"}
-                    className="w-7"
-                    onClick={handleOnClick}
-                  />
+                  <>
+                    {!favorites.includes(id) ? (
+                      <Image
+                        src={Heart}
+                        width={40}
+                        height={40}
+                        className="cursor-pointer"
+                        onClick={handleOnClick}
+                      />
+                    ) : (
+                      <Image
+                        src={HeartFill}
+                        width={40}
+                        height={40}
+                        className="cursor-pointer"
+                        onClick={handleOnClick}
+                      />
+                    )}
+                  </>
                 </div>
                 <div className="mt-4 flex gap-0 items-center sm:gap-4 flex-col sm:flex-row">
                   <p className="text-gray-400 text-lg font-medium">
