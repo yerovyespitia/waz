@@ -1,11 +1,11 @@
 import axios from "axios"
-import Image from "next/image"
-import Link from "next/link"
+// import Image from "next/image"
+// import Link from "next/link"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import ReactLoading from "react-loading"
-import Heart from "../../assets/heart.svg"
-import HeartFill from "../../assets/heart-fill.svg"
+// import Heart from "../../assets/heart.svg"
+// import HeartFill from "../../assets/heart-fill.svg"
 
 interface EpisodesTypes {
   id: string
@@ -45,35 +45,35 @@ const useFetchData = () => {
 }
 
 const Anime = () => {
-  const router = useRouter()
-  const { id } = router.query
+  // const router = useRouter()
+  // const { id } = router.query
   const { info, notExist } = useFetchData()
   // Favorite animes array added to localStorage
-  const [favorites, setFavorites] = useState(
-    JSON.parse(localStorage.getItem("favorites")) || []
-  )
+  // const [favorites, setFavorites] = useState(
+  //   JSON.parse(localStorage.getItem("favorites")) || []
+  // )
 
-  useEffect(() => {
-    // Keep favorites array from localStorage updated
-    localStorage.setItem("favorites", JSON.stringify(favorites))
-  }, [favorites])
+  // useEffect(() => {
+  // Keep favorites array from localStorage updated
+  //   localStorage.setItem("favorites", JSON.stringify(favorites))
+  // }, [favorites])
 
-  const setFavoritesFromLocalStorage = (param) => {
-    // Change elements from favorites array from localStorage
-    localStorage.setItem("favorites", JSON.stringify(param))
-  }
+  // const setFavoritesFromLocalStorage = (param) => {
+  // Change elements from favorites array from localStorage
+  //   localStorage.setItem("favorites", JSON.stringify(param))
+  // }
 
-  const handleOnClick = () => {
-    // Add an anime to favorites when click (without duplicates)
-    // Remove an anime from favorites when click again
-    if (!favorites.includes(id)) {
-      setFavorites((anime) => anime.concat(id))
-    } else {
-      let tempFavorites = favorites
-      setFavorites(tempFavorites.filter((fav) => fav !== id))
-      setFavoritesFromLocalStorage(tempFavorites.filter((fav) => fav !== id))
-    }
-  }
+  // const handleOnClick = () => {
+  // Add an anime to favorites when click (without duplicates)
+  // Remove an anime from favorites when click again
+  //   if (!favorites.includes(id)) {
+  //     setFavorites((anime) => anime.concat(id))
+  //   } else {
+  //     let tempFavorites = favorites
+  //     setFavorites(tempFavorites.filter((fav) => fav !== id))
+  //     setFavoritesFromLocalStorage(tempFavorites.filter((fav) => fav !== id))
+  //   }
+  // }
 
   // Loading screen
   if (notExist)
@@ -114,7 +114,7 @@ const Anime = () => {
                   <h1 className="text-white text-center mr-3 text-4xl font-bold">
                     {title}
                   </h1>
-                  <>
+                  {/* <>
                     {!favorites.includes(id) ? (
                       <Image
                         src={Heart}
@@ -132,7 +132,7 @@ const Anime = () => {
                         onClick={handleOnClick}
                       />
                     )}
-                  </>
+                  </> */}
                 </div>
                 <div className="mt-4 flex gap-0 items-center sm:gap-4 flex-col sm:flex-row">
                   <p className="text-gray-400 text-lg font-medium">
@@ -155,11 +155,11 @@ const Anime = () => {
             </div>
             <div className="mt-8 grid grid-cols-ep justify-center items-center lg:justify-start gap-4">
               {episodes.map(({ id, number }) => (
-                <Link href={`/watch/${id}`} key={id}>
-                  <button className="bg-[#B52B4E] h-10 rounded text-white font-bold">
-                    Ep {number}
-                  </button>
-                </Link>
+                // <Link href={`/watch/${id}`} key={id}>
+                <button className="bg-[#B52B4E] h-10 rounded text-white font-bold">
+                  Ep {number}
+                </button>
+                // {/* </Link> */}
               ))}
             </div>
           </div>

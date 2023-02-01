@@ -1,24 +1,24 @@
-import axios from "axios"
-import Link from "next/link"
-import { useEffect, useState } from "react"
+// import axios from "axios"
+// import Link from "next/link"
+// import { useEffect, useState } from "react"
 
 const Favorites = () => {
-  const [anime, setAnime] = useState([])
+  // const [anime, setAnime] = useState([])
   // Favorite animes array added to localStorage
-  const [favorites, setFavorites] = useState(
-    JSON.parse(localStorage.getItem("favorites")) || []
-  )
+  // const [favorites, setFavorites] = useState(
+  //   JSON.parse(localStorage.getItem("favorites")) || []
+  // )
 
-  useEffect(() => {
-    // Loop through favorite animes and get their info
-    favorites.map((fav) =>
-      axios
-        .get(`https://api.consumet.org/anime/gogoanime/${fav}`)
-        .then((res) => {
-          setAnime((fav) => fav.concat(res.data.results[0]))
-        })
-    )
-  }, [])
+  // useEffect(() => {
+  // Loop through favorite animes and get their info
+  //   favorites.map((fav) =>
+  //     axios
+  //       .get(`https://api.consumet.org/anime/gogoanime/${fav}`)
+  //       .then((res) => {
+  //         setAnime((fav) => fav.concat(res.data.results[0]))
+  //       })
+  //   )
+  // }, [])
 
   return (
     <section className="ml-56">
@@ -26,7 +26,7 @@ const Favorites = () => {
         Favorites
       </h1>
       <div className="p-5 grid grid-cols-app justify-center gap-8">
-        {anime.map(({ id, title, image }) => (
+        {/* {anime.map(({ id, title, image }) => (
           <Link href={`/anime/${id}`} key={id}>
             <div className="text-center my-2 cursor-pointer hover:scale-105 transition-all group">
               <img
@@ -37,7 +37,7 @@ const Favorites = () => {
               <p className="text-white text-lg font-bold mt-2">{title}</p>
             </div>
           </Link>
-        ))}
+        ))} */}
       </div>
     </section>
   )
