@@ -3,20 +3,25 @@
 function App({ recent }) {
   return (
     <section className="ml-56">
-      <h1 className="text-white sticky top-0 left-0 p-5 text-2xl font-semibold bg-[#1e1b21] z-10">
+      <h1 className="sticky top-0 left-0 z-10 bg-[#1e1b21] p-5 text-2xl font-semibold text-white">
         Weekly Releases
       </h1>
-      <div className="p-5 grid grid-cols-app justify-center gap-8">
-        {recent.map(({ title, image, episodeNumber }) => (
+      <div className="grid grid-cols-app justify-center gap-8 p-5">
+        {recent.map(({ id, title, image, episodeNumber }) => (
           // <Link href={`/watch/${id}-episode-${episodeNumber}`} key={id}>
-          <div className="text-center my-2 cursor-pointer hover:scale-105 transition-all group">
+          <div
+            className="group my-2 cursor-pointer text-center transition-all hover:scale-105"
+            key={id}
+          >
             <img
               src={image}
-              className="rounded-lg w-full h-[23rem] object-cover group-hover:border-2 group-hover:border-white"
+              className="h-[23rem] w-full rounded-lg object-cover text-center group-hover:border-2 group-hover:border-white"
               alt={title}
             />
-            <p className="text-white text-lg font-bold mt-2">{title}</p>
-            <p className="text-md text-gray-400 mt-1">
+            <p className="mt-2 text-center text-lg font-bold text-white">
+              {title}
+            </p>
+            <p className="text-md mt-1 text-gray-400">
               Episode {episodeNumber}
             </p>
           </div>

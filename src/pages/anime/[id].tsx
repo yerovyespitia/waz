@@ -78,7 +78,7 @@ const Anime = () => {
   // Loading screen
   if (notExist)
     return (
-      <div className="flex justify-center mt-56 ml-56 h-screen">
+      <div className="mt-56 ml-56 flex h-screen justify-center">
         <ReactLoading
           type={"spinningBubbles"}
           color={"white"}
@@ -103,15 +103,15 @@ const Anime = () => {
           episodes,
         }) => (
           <div key={id}>
-            <div className="flex flex-col lg:flex-row justify-center lg:justify-start items-center lg:items-start">
+            <div className="flex flex-col items-center justify-center lg:flex-row lg:items-start lg:justify-start">
               <img
                 src={image}
-                className="rounded-lg w-64 h-96 object-cover"
+                className="h-96 w-64 rounded-lg object-cover"
                 alt={title}
               />
-              <div className="flex justify-center flex-col items-center lg:ml-4 lg:items-start">
+              <div className="flex flex-col items-center justify-center lg:ml-4 lg:items-start">
                 <div className="flex">
-                  <h1 className="text-white text-center mr-3 text-4xl font-bold">
+                  <h1 className="mr-3 text-center text-4xl font-bold text-white">
                     {title}
                   </h1>
                   {/* <>
@@ -134,29 +134,29 @@ const Anime = () => {
                     )}
                   </> */}
                 </div>
-                <div className="mt-4 flex gap-0 items-center sm:gap-4 flex-col sm:flex-row">
-                  <p className="text-gray-400 text-lg font-medium">
+                <div className="mt-4 flex flex-col items-center gap-0 sm:flex-row sm:gap-4">
+                  <p className="text-lg font-medium text-gray-400">
                     {releaseDate}
                   </p>
-                  <p className="text-gray-400 text-lg font-medium">
+                  <p className="text-lg font-medium text-gray-400">
                     Episodes: {totalEpisodes}
                   </p>
-                  <p className="text-gray-400 text-lg font-medium">
+                  <p className="text-lg font-medium text-gray-400">
                     {subOrDub}
                   </p>
-                  <p className="text-gray-400 text-lg font-medium">{status}</p>
+                  <p className="text-lg font-medium text-gray-400">{status}</p>
                 </div>
                 <div className="mt-4 max-w-full lg:mr-4">
-                  <p className="text-white text-md text-justify">
+                  <p className="text-md text-justify text-white">
                     {description}
                   </p>
                 </div>
               </div>
             </div>
-            <div className="mt-8 grid grid-cols-ep justify-center items-center lg:justify-start gap-4">
+            <div className="mt-8 grid grid-cols-ep items-center justify-center gap-4 lg:justify-start">
               {episodes.map(({ id, number }) => (
                 // <Link href={`/watch/${id}`} key={id}>
-                <button className="bg-[#B52B4E] h-10 rounded text-white font-bold">
+                <button className="h-10 rounded bg-[#B52B4E] font-bold text-white">
                   Ep {number}
                 </button>
                 // {/* </Link> */}
