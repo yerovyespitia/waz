@@ -1,6 +1,6 @@
 import axios from "axios"
 // import Image from "next/image"
-// import Link from "next/link"
+import Link from "next/link"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import ReactLoading from "react-loading"
@@ -32,14 +32,14 @@ const useFetchData = () => {
 
   useEffect(() => {
     // Get animes info
-    // If animes does exist sets notExist as false
+    if (!router.isReady) return // avoid the undefined id issue
     axios
       .get<InfoTypes>(`https://api.consumet.org/anime/gogoanime/info/${id}`)
       .then((res) => {
         setInfo([res.data])
       })
       .finally(() => setNotExist(false))
-  }, [id])
+  }, [router.query.id, router.isReady])
 
   return { info, notExist }
 }
@@ -54,18 +54,18 @@ const Anime = () => {
   // )
 
   // useEffect(() => {
-  // Keep favorites array from localStorage updated
+  //   // Keep favorites array from localStorage updated
   //   localStorage.setItem("favorites", JSON.stringify(favorites))
   // }, [favorites])
 
   // const setFavoritesFromLocalStorage = (param) => {
-  // Change elements from favorites array from localStorage
+  //   // Change elements from favorites array from localStorage
   //   localStorage.setItem("favorites", JSON.stringify(param))
   // }
 
   // const handleOnClick = () => {
-  // Add an anime to favorites when click (without duplicates)
-  // Remove an anime from favorites when click again
+  //   // Add an anime to favorites when click (without duplicates)
+  //   // Remove an anime from favorites when click again
   //   if (!favorites.includes(id)) {
   //     setFavorites((anime) => anime.concat(id))
   //   } else {
@@ -111,7 +111,7 @@ const Anime = () => {
               />
               <div className="flex flex-col items-center justify-center lg:ml-4 lg:items-start">
                 <div className="flex">
-                  <h1 className="mr-3 text-center text-4xl font-bold text-white">
+                  <h1 className="mr-3 text-left text-4xl font-bold text-white">
                     {title}
                   </h1>
                   {/* <>
@@ -155,11 +155,11 @@ const Anime = () => {
             </div>
             <div className="mt-8 grid grid-cols-ep items-center justify-center gap-4 lg:justify-start">
               {episodes.map(({ id, number }) => (
-                // <Link href={`/watch/${id}`} key={id}>
-                <button className="h-10 rounded bg-[#B52B4E] font-bold text-white">
-                  Ep {number}
-                </button>
-                // {/* </Link> */}
+                <Link href={`/watch/${id}`} key={id}>
+                  <button className="h-10 rounded bg-[#B52B4E] font-bold text-white">
+                    Ep {number}
+                  </button>
+                </Link>
               ))}
             </div>
           </div>

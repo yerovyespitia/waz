@@ -8,6 +8,7 @@ import favorites from "../assets/favorites.svg"
 import { useRouter } from "next/router"
 import { useDispatch } from "react-redux"
 import { search } from "../states/inputSlice"
+import { useInputStore } from "../store/inputStore"
 
 const Navigation = () => {
   const dispatch = useDispatch()
