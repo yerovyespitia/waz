@@ -15,13 +15,22 @@ const useFetchData = () => {
       .then((res) => {
         setAnime(res.data.results)
       })
-  }, [results])
+  }, [results, anime])
 
   return { anime }
 }
 
 const Search = () => {
   const { anime } = useFetchData()
+
+  if (typeof anime === "undefined")
+    return (
+      <section className="ml-56">
+        <h1 className="sticky top-0 left-0 z-10 bg-[#1e1b21] p-5 text-2xl font-semibold text-white">
+          Search
+        </h1>
+      </section>
+    )
 
   return (
     <section className="ml-56">

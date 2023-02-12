@@ -1,87 +1,43 @@
-import axios from "axios"
-// import Image from "next/image"
+import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import ReactLoading from "react-loading"
-// import Heart from "../../assets/heart.svg"
-// import HeartFill from "../../assets/heart-fill.svg"
+import Heart from "../../assets/heart.svg"
+import HeartFill from "../../assets/heart-fill.svg"
 
-interface Episode {
-  id: string
-  number: number
-  url: string
-}
-
-interface InfoTypes {
-  id: string
-  title: string
-  url: string
-  genres: string[]
-  totalEpisodes: number
-  image: string
-  releaseDate: string
-  description: string
-  subOrDub: string
-  type: string
-  status: string
-  otherName: string
-  episodes: Episode[]
-}
-
-const useFetchData = () => {
+const Anime = ({ info }) => {
   const router = useRouter()
   const { id } = router.query
-  const [info, setInfo] = useState<InfoTypes[]>([])
-  const [notExist, setNotExist] = useState(true)
+  // Favorite animes array added to localStorage
+  const [favorites, setFavorites] = useState(
+    JSON.parse(localStorage.getItem("favorites")) || []
+  )
 
   useEffect(() => {
-    // Get animes info
-    if (!router.isReady) return // avoid the undefined id issue
-    axios
-      .get<InfoTypes>(`https://api.consumet.org/anime/gogoanime/info/${id}`)
-      .then((res) => {
-        setInfo([res.data])
-      })
-      .finally(() => setNotExist(false))
-  }, [id, router.isReady])
+    // Keep favorites array from localStorage updated
+    localStorage.setItem("favorites", JSON.stringify(favorites))
+  }, [favorites])
 
-  return { info, notExist }
-}
+  const setFavoritesFromLocalStorage = (param) => {
+    // Change elements from favorites array from localStorage
+    localStorage.setItem("favorites", JSON.stringify(param))
+  }
 
-const Anime = () => {
-  // const router = useRouter()
-  // const { id } = router.query
-  const { info, notExist } = useFetchData()
-  // Favorite animes array added to localStorage
-  // const [favorites, setFavorites] = useState(
-  //   JSON.parse(localStorage.getItem("favorites")) || []
-  // )
-
-  // useEffect(() => {
-  //   // Keep favorites array from localStorage updated
-  //   localStorage.setItem("favorites", JSON.stringify(favorites))
-  // }, [favorites])
-
-  // const setFavoritesFromLocalStorage = (param) => {
-  //   // Change elements from favorites array from localStorage
-  //   localStorage.setItem("favorites", JSON.stringify(param))
-  // }
-
-  // const handleOnClick = () => {
-  //   // Add an anime to favorites when click (without duplicates)
-  //   // Remove an anime from favorites when click again
-  //   if (!favorites.includes(id)) {
-  //     setFavorites((anime) => anime.concat(id))
-  //   } else {
-  //     let tempFavorites = favorites
-  //     setFavorites(tempFavorites.filter((fav) => fav !== id))
-  //     setFavoritesFromLocalStorage(tempFavorites.filter((fav) => fav !== id))
-  //   }
-  // }
+  const handleOnClick = () => {
+    // Add an anime to favorites when click (without duplicates)
+    // Remove an anime from favorites when click again
+    if (!favorites.includes(id)) {
+      setFavorites((anime) => anime.concat(id))
+    } else {
+      let tempFavorites = favorites
+      setFavorites(tempFavorites.filter((fav) => fav !== id))
+      setFavoritesFromLocalStorage(tempFavorites.filter((fav) => fav !== id))
+    }
+  }
 
   // Loading screen
-  if (notExist)
+  if (!router.isReady)
     return (
       <div className="mt-56 ml-56 flex h-screen justify-center">
         <ReactLoading
@@ -119,7 +75,7 @@ const Anime = () => {
                   <h1 className="mr-3 text-left text-4xl font-bold text-white">
                     {title}
                   </h1>
-                  {/* <>
+                  <>
                     {!favorites.includes(id) ? (
                       <Image
                         src={Heart}
@@ -137,7 +93,7 @@ const Anime = () => {
                         onClick={handleOnClick}
                       />
                     )}
-                  </> */}
+                  </>
                 </div>
                 <div className="mt-4 flex flex-col items-center gap-0 sm:flex-row sm:gap-4">
                   <p className="text-lg font-medium text-gray-400">
@@ -175,3 +131,16 @@ const Anime = () => {
 }
 
 export default Anime
+
+export const getStaticProps = async (context) => {
+  const id = context.params.id
+  // Get last episodes  available
+  const res = await fetch(`https://api.consumet.org/anime/gogoanime/info/${id}`)
+  const info = await res.json()
+
+  return {
+    props: {
+      info: info.results,
+    },
+  }
+}
