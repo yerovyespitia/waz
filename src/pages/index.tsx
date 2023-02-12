@@ -1,4 +1,4 @@
-// import Link from "next/link"
+import Link from "next/link"
 
 function App({ recent }) {
   return (
@@ -8,24 +8,24 @@ function App({ recent }) {
       </h1>
       <div className="grid grid-cols-app justify-center gap-8 p-5">
         {recent.map(({ id, title, image, episodeNumber }) => (
-          // <Link href={`/watch/${id}-episode-${episodeNumber}`} key={id}>
-          <div
-            className="group my-2 cursor-pointer text-center transition-all hover:scale-105"
-            key={id}
-          >
-            <img
-              src={image}
-              className="h-[23rem] w-full rounded-lg object-cover text-center group-hover:border-2 group-hover:border-white"
-              alt={title}
-            />
-            <p className="mt-2 text-center text-lg font-bold text-white">
-              {title}
-            </p>
-            <p className="text-md mt-1 text-gray-400">
-              Episode {episodeNumber}
-            </p>
-          </div>
-          // </Link>
+          <Link href={`/watch/${id}-episode-${episodeNumber}`} key={id}>
+            <div
+              className="group my-2 cursor-pointer text-center transition-all hover:scale-105"
+              key={id}
+            >
+              <img
+                src={image}
+                className="h-[23rem] w-full rounded-lg object-cover text-center group-hover:border-2 group-hover:border-white"
+                alt={title}
+              />
+              <p className="mt-2 text-center text-lg font-bold text-white">
+                {title}
+              </p>
+              <p className="text-md mt-1 text-gray-400">
+                Episode {episodeNumber}
+              </p>
+            </div>
+          </Link>
         ))}
       </div>
     </section>

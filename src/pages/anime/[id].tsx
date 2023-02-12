@@ -7,21 +7,26 @@ import ReactLoading from "react-loading"
 // import Heart from "../../assets/heart.svg"
 // import HeartFill from "../../assets/heart-fill.svg"
 
-interface EpisodesTypes {
+interface Episode {
   id: string
   number: number
+  url: string
 }
 
 interface InfoTypes {
   id: string
   title: string
-  image: string
-  description: string
-  releaseDate: string
-  status: string
-  subOrDub: string
+  url: string
+  genres: string[]
   totalEpisodes: number
-  episodes: EpisodesTypes[]
+  image: string
+  releaseDate: string
+  description: string
+  subOrDub: string
+  type: string
+  status: string
+  otherName: string
+  episodes: Episode[]
 }
 
 const useFetchData = () => {
@@ -39,7 +44,7 @@ const useFetchData = () => {
         setInfo([res.data])
       })
       .finally(() => setNotExist(false))
-  }, [router.query.id, router.isReady])
+  }, [id, router.isReady])
 
   return { info, notExist }
 }
