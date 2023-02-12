@@ -132,7 +132,7 @@ const Anime = ({ info }) => {
 
 export default Anime
 
-export const getStaticProps = async (context) => {
+export const getServerSideProps = async (context) => {
   const id = context.params.id
   // Get last episodes  available
   const res = await fetch(`https://api.consumet.org/anime/gogoanime/info/${id}`)
