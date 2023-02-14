@@ -1,43 +1,62 @@
 import Image from "next/image"
+import axios from "axios"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import ReactLoading from "react-loading"
 import Heart from "../../assets/heart.svg"
 import HeartFill from "../../assets/heart-fill.svg"
+import { useFavoriteStore } from "../../store/favoriteStore"
 
-const Anime = ({ info }) => {
+interface Info {
+  id: string
+  title: string
+  url: string
+  genres: string[]
+  totalEpisodes: number
+  image: string
+  releaseDate: string
+  description: string
+  subOrDub: string
+  type: string
+  status: string
+  otherName: string
+  episodes: Episode[]
+}
+
+interface Episode {
+  id: string
+  number: number
+  url: string
+}
+
+const useFetchData = () => {
   const router = useRouter()
   const { id } = router.query
-  // Favorite animes array added to localStorage
-  const [favorites, setFavorites] = useState(
-    JSON.parse(localStorage.getItem("favorites")) || []
-  )
+  const [info, setInfo] = useState<Info[]>([])
+  const [notExist, setNotExist] = useState(true)
 
   useEffect(() => {
-    // Keep favorites array from localStorage updated
-    localStorage.setItem("favorites", JSON.stringify(favorites))
-  }, [favorites])
+    // Get animes info
+    if (!router.isReady) return // avoid the undefined id issue
+    axios
+      .get<Info>(`https://api.consumet.org/anime/gogoanime/info/${id}`)
+      .then((res) => {
+        setInfo([res.data])
+      })
+  }, [id, router.isReady])
 
-  const setFavoritesFromLocalStorage = (param) => {
-    // Change elements from favorites array from localStorage
-    localStorage.setItem("favorites", JSON.stringify(param))
-  }
+  return { info, notExist }
+}
 
-  const handleOnClick = () => {
-    // Add an anime to favorites when click (without duplicates)
-    // Remove an anime from favorites when click again
-    if (!favorites.includes(id)) {
-      setFavorites((anime) => anime.concat(id))
-    } else {
-      let tempFavorites = favorites
-      setFavorites(tempFavorites.filter((fav) => fav !== id))
-      setFavoritesFromLocalStorage(tempFavorites.filter((fav) => fav !== id))
-    }
-  }
+const Anime = () => {
+  const { info, notExist } = useFetchData()
+  const favorites = useFavoriteStore((state) => state.favorites)
+  const addFavorite = useFavoriteStore((state) => state.addFavorite)
+  const removeFavorite = useFavoriteStore((state) => state.removeFavorite)
 
   // Loading screen
-  if (!router.isReady)
+  if (!notExist)
     return (
       <div className="mt-56 ml-56 flex h-screen justify-center">
         <ReactLoading
@@ -82,7 +101,7 @@ const Anime = ({ info }) => {
                         width={40}
                         height={40}
                         className="cursor-pointer"
-                        onClick={handleOnClick}
+                        onClick={() => addFavorite(id)}
                       />
                     ) : (
                       <Image
@@ -90,7 +109,7 @@ const Anime = ({ info }) => {
                         width={40}
                         height={40}
                         className="cursor-pointer"
-                        onClick={handleOnClick}
+                        onClick={() => removeFavorite(id)}
                       />
                     )}
                   </>
@@ -131,16 +150,3 @@ const Anime = ({ info }) => {
 }
 
 export default Anime
-
-export const getServerSideProps = async (context) => {
-  const id = context.params.id
-  // Get last episodes  available
-  const res = await fetch(`https://api.consumet.org/anime/gogoanime/info/${id}`)
-  const info = await res.json()
-
-  return {
-    props: {
-      info: info.results,
-    },
-  }
-}

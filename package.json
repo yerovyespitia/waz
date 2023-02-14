@@ -8,7 +8,6 @@
     "tauri": "tauri"
   },
   "dependencies": {
-    "@reduxjs/toolkit": "^1.9.1",
     "@tauri-apps/api": "^1.1.0",
     "axios": "^1.2.0",
     "next": "^12.2.5",
@@ -16,8 +15,6 @@
     "react-dom": "^18.2.0",
     "react-loading": "^2.0.3",
     "react-netflix-player": "^1.2.0",
-    "react-redux": "^8.0.5",
-    "redux": "^4.2.0",
     "zustand": "^4.3.2"
   },
   "devDependencies": {

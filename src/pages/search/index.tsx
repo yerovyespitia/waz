@@ -1,21 +1,20 @@
 import axios from "axios"
 import Link from "next/link"
 import { useEffect, useState } from "react"
-import { RootState } from "../../states/store"
-import { useSelector } from "react-redux"
+import { useInputStore } from "../../store/inputStore"
 
 const useFetchData = () => {
-  const { results } = useSelector((state: RootState) => state.input.value)
+  const search = useInputStore((state) => state.search)
   const [anime, setAnime] = useState([])
 
   useEffect(() => {
     // Fetch and filter the animes (results) with text submited
     axios
-      .get(`https://api.consumet.org/anime/gogoanime/${results}`)
+      .get(`https://api.consumet.org/anime/gogoanime/${search}`)
       .then((res) => {
         setAnime(res.data.results)
       })
-  }, [results, anime])
+  }, [search, anime])
 
   return { anime }
 }
