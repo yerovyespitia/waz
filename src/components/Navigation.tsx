@@ -3,8 +3,6 @@ import Link from "next/link"
 import home from "../assets/home.svg"
 import populars from "../assets/populars.svg"
 import favorites from "../assets/favorites.svg"
-// import downloaded from "../assets/downloaded.svg"
-// import settings from "../assets/settings.svg"
 import { useRouter } from "next/router"
 import { useInputStore } from "../store/inputStore"
 
@@ -32,7 +30,7 @@ const Navigation = () => {
                 : "links hover:bg-[#262229]"
             }
           >
-            <Image src={home} width={16} height={16} />
+            <Image src={home} width={16} height={16} alt="home" />
             <li>Home</li>
           </div>
         </Link>
@@ -44,7 +42,7 @@ const Navigation = () => {
                 : "links hover:bg-[#262229]"
             }
           >
-            <Image src={populars} width={16} height={16} />
+            <Image src={populars} width={16} height={16} alt="populars" />
             <li>Populars</li>
           </div>
         </Link>
@@ -56,34 +54,10 @@ const Navigation = () => {
                 : "links hover:bg-[#262229]"
             }
           >
-            <Image src={favorites} width={16} height={16} />
+            <Image src={favorites} width={16} height={16} alt="favorites" />
             <li>Favorites</li>
           </div>
         </Link>
-        {/* <Link href={"/downloaded"}>
-          <div
-            className={
-              pathname === "/downloaded"
-                ? "links bg-[#262229]"
-                : "links hover:bg-[#262229]"
-            }
-          >
-            <Image src={downloaded} width={16} height={16} />
-            <li>Downloads</li>
-          </div>
-        </Link> */}
-        {/* <Link href={"/settings"}>
-          <div
-            className={
-              pathname === "/settings"
-                ? "links bg-[#262229]"
-                : "links hover:bg-[#262229]"
-            }
-          >
-            <Image src={settings} width={16} height={16} />
-            <li>Settings</li>
-          </div>
-        </Link> */}
       </ul>
     </nav>
   )

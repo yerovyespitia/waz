@@ -84,9 +84,11 @@ const Anime = () => {
         }) => (
           <div key={id}>
             <div className="flex flex-col items-center justify-center lg:flex-row lg:items-start lg:justify-start">
-              <img
+              <Image
                 src={image}
                 className="h-96 w-64 rounded-lg object-cover"
+                width={256}
+                height={384}
                 alt={title}
               />
               <div className="flex flex-col items-center justify-center lg:ml-4 lg:items-start">
@@ -102,6 +104,7 @@ const Anime = () => {
                         height={40}
                         className="cursor-pointer"
                         onClick={() => addFavorite(id)}
+                        alt="Heart"
                       />
                     ) : (
                       <Image
@@ -110,6 +113,7 @@ const Anime = () => {
                         height={40}
                         className="cursor-pointer"
                         onClick={() => removeFavorite(id)}
+                        alt="Heart-fill"
                       />
                     )}
                   </>
